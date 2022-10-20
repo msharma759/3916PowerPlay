@@ -11,7 +11,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
  */
 
 
-public class Blue_1_1 {
+public class Blue_2_1 {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
@@ -19,14 +19,14 @@ public class Blue_1_1 {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 18)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-35.00, 63.00, 0))
-                                .lineToConstantHeading(new Vector2d(-12.00, 60.00))
-                                .lineToConstantHeading(new Vector2d(-12.00, 23.0))
+                        drive.trajectorySequenceBuilder(new Pose2d(35.00, 63.00, Math.toRadians(180)))
+                                .lineToConstantHeading(new Vector2d(12.00, 60.00))
+                                .lineToConstantHeading(new Vector2d(12.00, 23.0))
                                 //Theoretical Pause
-                                .lineToLinearHeading(new Pose2d(-12.00, 12, Math.toRadians(0)))
-                                .lineToLinearHeading(new Pose2d(-55.00, 12, Math.toRadians(180)))
-                                .lineToLinearHeading(new Pose2d(-24.00, 12, Math.toRadians(270)))
-                                .lineToLinearHeading(new Pose2d(-35.50, 12, Math.toRadians(90)))
+                                .lineToLinearHeading(new Pose2d(12.00, 12, Math.toRadians(180)))
+                                .lineToLinearHeading(new Pose2d(55.00, 12, Math.toRadians(0)))
+                                .lineToLinearHeading(new Pose2d(24.00, 12, Math.toRadians(270)))
+                                .lineToLinearHeading(new Pose2d(35.50, 12, Math.toRadians(90)))
                                 .build()
                 );
 
