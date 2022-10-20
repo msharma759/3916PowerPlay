@@ -1,6 +1,6 @@
 package com.example.meepmeeptesting;
 /**
- * Author: Jude Naramor
+ * @author Jude Naramor
  * **/
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.noahbres.meepmeep.MeepMeep;
