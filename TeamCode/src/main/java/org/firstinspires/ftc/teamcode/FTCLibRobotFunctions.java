@@ -17,6 +17,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * @author Aman Anas
  * @author Gabrian Chua
  * @author Jason Armbruster
+ * @author Vikram Krishnakumar
  *
  * @since November 2020
  * @version October 2021
@@ -36,6 +37,13 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //public MotorEx flywheelMotor;
     public MotorEx slideMotor;
     public ServoEx allenServo;
+//    public SlidePosition currentSlidePosition = SlidePosition.BOTTOM;
+//    public enum SlidePosition{
+//        BOTTOM,
+//        LOW,
+//        MIDDLE,
+//        TOP;
+//    }
 
     //initialize motors and servos
     public void initBot(HardwareMap hw) {
@@ -53,7 +61,40 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
                ////////////////////////// Methods for extra components //////////////////////////
     */
 
+    public void openClaw() {
+        allenServo.setPosition(TeleOpConfig.ALLEN_SERVO_MAX);
+    }
 
+    public void closeClaw() {
+        allenServo.setPosition(TeleOpConfig.ALLEN_SERVO_MIN);
+    }
+
+//    public boolean inRange(double num, double range) {
+//        return
+//    }
+//
+//    public void moveSlide(double speed) {
+//
+//        switch (currentSlidePosition) {
+//            case BOTTOM:
+//                if(slideMotor.encoder.getPosition() != 0) {
+//
+//                }
+//                else {
+//                    slideMotor.set(0);
+//                }
+//                break;
+//            case LOW:
+//
+//                break;
+//            case MIDDLE:
+//
+//                break;
+//            case TOP:
+//
+//                break;
+//        }
+//    }
 
     /* Example:
 
