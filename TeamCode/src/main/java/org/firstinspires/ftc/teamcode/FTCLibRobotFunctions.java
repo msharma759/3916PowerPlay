@@ -37,6 +37,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //public MotorEx flywheelMotor;
     public MotorEx slideMotor;
     public ServoEx allenServo;
+    private double slideMotorCurrentTarget;
 //    public SlidePosition currentSlidePosition = SlidePosition.BOTTOM;
 //    public enum SlidePosition{
 //        BOTTOM,
@@ -52,14 +53,35 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         allenServo = new SimpleServo(hw, "allen servo", 0,180);
 
         slideMotor = new MotorEx(hw, "slide motor");
-        slideMotor.setRunMode(Motor.RunMode.RawPower);
+        slideMotor.setRunMode(Motor.RunMode.PositionControl);
         slideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        slideMotor.setPositionCoefficient(TeleOpConfig.SLIDE_MOTOR_COEFFICIENT);
+        slideMotor.setPositionTolerance(200);
 
     }
 
     /*
                ////////////////////////// Methods for extra components //////////////////////////
     */
+
+    public void motorUpdate() {
+        int curPos = slideMotor.getCurrentPosition();
+        if (!slideMotor.atTargetPosition()) {
+            if (curPos > slideMotorCurrentTarget) {
+                slideMotor.set(-0.5);
+            } else {
+                slideMotor.set(0.5);
+            }
+        } else {
+            slideMotor.set(0);
+        }
+    }
+
+    public void motorTo(int pos) {
+        slideMotor.setTargetPosition(pos);
+        slideMotorCurrentTarget = pos;
+    }
 
     public void openClaw() {
         allenServo.setPosition(TeleOpConfig.ALLEN_SERVO_MAX);

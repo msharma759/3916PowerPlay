@@ -88,7 +88,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             double leftX = Gamepad1.getLeftX();
             double rightX = Gamepad1.getRightX();
             boolean precisionMode = (Gamepad1.getButton(GamepadKeys.Button.RIGHT_BUMPER) || Gamepad1.getButton(GamepadKeys.Button.LEFT_BUMPER));
-
+            bot.motorUpdate();
             // Rotation Axis
             if (Math.abs(rightX) > TeleOpConfig.STICK_DEAD_ZONE) {
                 z = (rightX);
@@ -142,8 +142,14 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
 
 
             //Button inputs
+            //BE CAREFUL THIS DOES NOT WORK AND WILL BREAK ROBOT - sorry
+            if (Gamepad2.getButton(GamepadKeys.Button.A)) {
+                bot.motorTo(4000);
+            }
 
-
+            if (Gamepad2.getButton(GamepadKeys.Button.B)) {
+                bot.motorTo(0);
+            }
             /*
                ////////////////////////// TELEMETRY //////////////////////////
             */
@@ -152,6 +158,8 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
+            telemetry.addData("Slide Motor Encoder", "pos: "+bot.slideMotor.encoder.getPosition());
+            telemetry.addData("Slide Motor Position", "pos: "+bot.slideMotor.getCurrentPosition());
             telemetry.update();
         }
     }
