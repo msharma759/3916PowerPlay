@@ -146,9 +146,9 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             //Button inputs
             //I mean you could break the robot, but you probably shouldnt be able to
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
-                bot.slideMotor.set(1);
-            } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
                 bot.slideMotor.set(-1);
+            } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
+                bot.slideMotor.set(1);
             } else {
                 bot.slideMotor.set(0);
             }
