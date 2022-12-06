@@ -19,13 +19,13 @@ public class Red_2_1 {
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(35, -65, Math.toRadians(90)))
                                 .lineToLinearHeading(new Pose2d(12, -65, Math.toRadians(90)))
-                                .lineToLinearHeading(new Pose2d(12, -12, Math.toRadians(90)))
+                                .lineToLinearHeading(new Pose2d(12, -12, Math.toRadians(0)))
                                 //place to put down preloaded cone/scoring utility
-                                .lineToLinearHeading(new Pose2d(25, -12, Math.toRadians(90)))
+                                .lineToLinearHeading(new Pose2d(25, -12, Math.toRadians(-90)))
                                 //place to load a cone/scoring utility
                                 .lineToLinearHeading(new Pose2d(55, -12, Math.toRadians(0)))
                                 .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
-                                .lineToLinearHeading(new Pose2d(25, -12, Math.toRadians(90)))
+                                .lineToLinearHeading(new Pose2d(25, -12, Math.toRadians(-90)))
                                 //place to put down a preloaded cone/scoring utility
                                 .lineToLinearHeading(new Pose2d(35, -12, Math.toRadians(90)))
                                 .build()
