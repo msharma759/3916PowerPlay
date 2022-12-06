@@ -1,6 +1,7 @@
 package com.example.meepmeeptesting;
 /**
  * @author Jude Naramor
+ * @author Maulik Verma
  * **/
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.noahbres.meepmeep.MeepMeep;
@@ -19,15 +20,17 @@ public class Red_1_1 {
                                 .lineToLinearHeading(new Pose2d(-12, -65, Math.toRadians(90)))
                                 .lineToLinearHeading(new Pose2d(-12, -12, Math.toRadians(90)))
                                 //place to put down preloaded cone/scoring utility
-                                .lineToLinearHeading(new Pose2d(-25, -12, Math.toRadians(90)))
+                                .lineToLinearHeading(new Pose2d(-25, -12, Math.toRadians(270)))
                                 //place to load a cone/scoring utility
                                 .lineToLinearHeading(new Pose2d(-55, -12, Math.toRadians(180)))
                                 .lineToLinearHeading(new Pose2d(-40, -12, Math.toRadians(180)))
-                                .lineToLinearHeading(new Pose2d(-25, -12, Math.toRadians(90)))
+                                .lineToLinearHeading(new Pose2d(-25, -12, Math.toRadians(270)))
                                 //place to put down a preloaded cone/scoring utility
-                                .lineToLinearHeading(new Pose2d(-35, -12, Math.toRadians(90)))
+                                .lineToLinearHeading(new Pose2d(-35, -12, Math.toRadians(270)))
                                 .build()
                 );
+        //(x,y) -> (34,16)
+
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_POWERPLAY_OFFICIAL)
                 .setDarkMode(true)
