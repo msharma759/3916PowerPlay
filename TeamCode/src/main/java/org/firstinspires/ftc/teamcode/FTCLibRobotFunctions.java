@@ -37,7 +37,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //public MotorEx flywheelMotor;
     public MotorEx slideMotor;
     public ServoEx allenServo;
-    private double slideMotorCurrentTarget;
+    private double slideMotorCurrentTarget = 0;
 //    public SlidePosition currentSlidePosition = SlidePosition.BOTTOM;
 //    public enum SlidePosition{
 //        BOTTOM,
@@ -53,11 +53,12 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         allenServo = new SimpleServo(hw, "allen servo", 0,180);
 
         slideMotor = new MotorEx(hw, "slide motor");
-        slideMotor.setRunMode(Motor.RunMode.PositionControl);
+        slideMotor.setRunMode(Motor.RunMode.RawPower);
         slideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        slideMotor.encoder.reset();
 
         slideMotor.setPositionCoefficient(TeleOpConfig.SLIDE_MOTOR_COEFFICIENT);
-        slideMotor.setPositionTolerance(200);
+        slideMotor.setPositionTolerance(TeleOpConfig.SLIDE_MOTOR_TOLERANCE);
 
     }
 
@@ -65,13 +66,28 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
                ////////////////////////// Methods for extra components //////////////////////////
     */
 
+    /**
+     * Check if the provided motor
+     * @param motor motor to be checked
+     * @param target target position for the motor
+     * @param tolerance tolerance for the target
+     * @return if it is at the position or not
+     */
+    private boolean motorAtPos(MotorEx motor, double target, double tolerance) {
+        double motorPos = motor.getCurrentPosition();
+        return motorPos - tolerance < target && motorPos + tolerance > target;
+    }
+
+    /**
+     * Call this method every loop, runs the slide motor
+     */
     public void motorUpdate() {
         int curPos = slideMotor.getCurrentPosition();
-        if (!slideMotor.atTargetPosition()) {
+        if (!motorAtPos(slideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE)) {
             if (curPos > slideMotorCurrentTarget) {
-                slideMotor.set(-0.5);
+                slideMotor.set(-1);
             } else {
-                slideMotor.set(0.5);
+                slideMotor.set(1);
             }
         } else {
             slideMotor.set(0);
@@ -79,8 +95,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
 
     public void motorTo(int pos) {
-        slideMotor.setTargetPosition(pos);
-        slideMotorCurrentTarget = pos;
+        slideMotorCurrentTarget = -pos;
     }
 
     public void openClaw() {
