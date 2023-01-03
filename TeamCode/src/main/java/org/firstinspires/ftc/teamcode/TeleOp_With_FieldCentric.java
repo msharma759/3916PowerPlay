@@ -144,7 +144,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             //Button inputs
             //BE CAREFUL THIS DOES NOT WORK AND WILL BREAK ROBOT - sorry
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
-                bot.motorTo(4000);
+                bot.motorTo(TeleOpConfig.SLIDE_MOTOR_TEST_POS);
             }
 
             if (Gamepad2.getButton(GamepadKeys.Button.B)) {
