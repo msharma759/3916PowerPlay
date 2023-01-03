@@ -36,6 +36,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //Example:
     //public MotorEx flywheelMotor;
     public MotorEx slideMotor;
+    public MotorEx slideMotor2;
     public ServoEx allenServo;
     private double slideMotorCurrentTarget = 0;
 //    public SlidePosition currentSlidePosition = SlidePosition.BOTTOM;
@@ -56,6 +57,11 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         slideMotor.setRunMode(Motor.RunMode.RawPower);
         slideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         slideMotor.encoder.reset();
+
+        slideMotor2 = new MotorEx(hw, "slides motor 2");
+        slideMotor2.setRunMode(Motor.RunMode.RawPower);
+        slideMotor2.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        slideMotor2.encoder.reset();
 
         slideMotor.setPositionCoefficient(TeleOpConfig.SLIDE_MOTOR_COEFFICIENT);
         slideMotor.setPositionTolerance(TeleOpConfig.SLIDE_MOTOR_TOLERANCE);
@@ -86,11 +92,14 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         if (!motorAtPos(slideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE)) {
             if (curPos > slideMotorCurrentTarget) {
                 slideMotor.set(-1);
+                slideMotor2.set(-1);
             } else {
                 slideMotor.set(1);
+                slideMotor2.set(1);
             }
         } else {
             slideMotor.set(0);
+            slideMotor2.set(0);
         }
     }
 
