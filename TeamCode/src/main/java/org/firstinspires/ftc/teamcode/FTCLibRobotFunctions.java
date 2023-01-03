@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.arcrobotics.ftclib.hardware.motors.MotorGroup;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -35,7 +36,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     //Example:
     //public MotorEx flywheelMotor;
-    public MotorEx slideMotor;
+    public MotorGroup slideMotors;
     public ServoEx allenServo;
     private double slideMotorCurrentTarget = 0;
 //    public SlidePosition currentSlidePosition = SlidePosition.BOTTOM;
@@ -51,14 +52,15 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         super.init(hw);
 
         allenServo = new SimpleServo(hw, "allen servo", 0,180);
+        slideMotors = new MotorGroup(new MotorEx(hw, "slide motor"), new MotorEx(hw, "slides motor 2"));
 
-        slideMotor = new MotorEx(hw, "slide motor");
-        slideMotor.setRunMode(Motor.RunMode.RawPower);
-        slideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        slideMotor.encoder.reset();
+        slideMotors.setRunMode(Motor.RunMode.RawPower);
+        slideMotors.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        slideMotors.encoder.reset();
 
-        slideMotor.setPositionCoefficient(TeleOpConfig.SLIDE_MOTOR_COEFFICIENT);
-        slideMotor.setPositionTolerance(TeleOpConfig.SLIDE_MOTOR_TOLERANCE);
+
+        slideMotors.setPositionCoefficient(TeleOpConfig.SLIDE_MOTOR_COEFFICIENT);
+        slideMotors.setPositionTolerance(TeleOpConfig.SLIDE_MOTOR_TOLERANCE);
 
     }
 
@@ -73,7 +75,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
      * @param tolerance tolerance for the target
      * @return if it is at the position or not
      */
-    private boolean motorAtPos(MotorEx motor, double target, double tolerance) {
+    private boolean motorAtPos(Motor motor, double target, double tolerance) {
         double motorPos = motor.getCurrentPosition();
         return motorPos - tolerance < target && motorPos + tolerance > target;
     }
@@ -82,15 +84,15 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
      * Call this method every loop, runs the slide motor
      */
     public void motorUpdate() {
-        int curPos = slideMotor.getCurrentPosition();
-        if (!motorAtPos(slideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE)) {
+        int curPos = slideMotors.getCurrentPosition();
+        if (!motorAtPos(slideMotors, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE)) {
             if (curPos > slideMotorCurrentTarget) {
-                slideMotor.set(-1);
+                slideMotors.set(-1);
             } else {
-                slideMotor.set(1);
+                slideMotors.set(1);
             }
         } else {
-            slideMotor.set(0);
+            slideMotors.set(0);
         }
     }
 
