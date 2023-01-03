@@ -56,7 +56,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
         slideMotors.setRunMode(Motor.RunMode.RawPower);
         slideMotors.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        slideMotors.encoder.reset();
+        //slideMotors.encoder.reset();
 
 
         slideMotors.setPositionCoefficient(TeleOpConfig.SLIDE_MOTOR_COEFFICIENT);
