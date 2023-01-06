@@ -90,12 +90,12 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void motorUpdate() {
         int curPos = slideMotor.getCurrentPosition();
         if (!motorAtPos(slideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE)) {
-            if (curPos > slideMotorCurrentTarget) {
-                slideMotor.set(1);
-                slideMotor2.set(1);
+            if (curPos < slideMotorCurrentTarget) {
+                slideMotor.set(0.5);
+                slideMotor2.set(0.5);
             } else {
-                slideMotor.set(-1);
-                slideMotor2.set(-1);
+                slideMotor.set(-0.1);
+                slideMotor2.set(-0.1);
             }
         } else {
             slideMotor.set(0);

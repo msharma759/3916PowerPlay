@@ -10,7 +10,7 @@ public class TeleOpConfig {
     public static double ALLEN_SERVO_MIN = 0.7;
     public static double SLIDE_MOTOR_COEFFICIENT = 0.05;
     public static double SLIDE_MOTOR_TOLERANCE = 10;
-    public static int SLIDE_MOTOR_TEST_POS = 18000;
+    public static int SLIDE_MOTOR_TEST_POS = 5000;
 //    public static double SLIDE_POS_LOW = 100;
 //    public static double SLIDE_POS_MIDDLE = 200;
 //    public static double SLIDE_POS_TOP = 300;
