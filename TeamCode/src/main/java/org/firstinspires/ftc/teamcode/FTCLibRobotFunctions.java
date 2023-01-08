@@ -39,6 +39,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public MotorEx slideMotor2;
     public ServoEx allenServo;
     private double slideMotorCurrentTarget = 0;
+    private boolean slideBusy = false;
 //    public SlidePosition currentSlidePosition = SlidePosition.BOTTOM;
 //    public enum SlidePosition{
 //        BOTTOM,
@@ -90,18 +91,22 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void motorUpdate() {
         int curPos = slideMotor.getCurrentPosition();
         if (!motorAtPos(slideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE)) {
+            slideBusy = true;
             if (curPos < slideMotorCurrentTarget) {
-                slideMotor.set(0.5);
-                slideMotor2.set(0.5);
+                slideMotor.set(1);
+                slideMotor2.set(1);
             } else {
-                slideMotor.set(-0.1);
-                slideMotor2.set(-0.1);
+                slideMotor.set(-1);
+                slideMotor2.set(-1);
             }
         } else {
+            slideBusy = false;
             slideMotor.set(0);
             slideMotor2.set(0);
         }
     }
+
+    public boolean isSlideBusy() {return slideBusy;}
 
     public void motorTo(int pos) {
         slideMotorCurrentTarget = pos;
