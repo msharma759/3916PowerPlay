@@ -48,16 +48,31 @@ public class Red_1_1 extends LinearOpMode {
 
         int currentStep = 1;
 
-        TrajectorySequence traj = drive.trajectorySequenceBuilder(new Pose2d(-35, -65, Math.toRadians(90)))
+        Pose2d startPose = new Pose2d(-35, -65, Math.toRadians(90));
+        drive.setPoseEstimate(startPose);
+
+        TrajectorySequence traj = drive.trajectorySequenceBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(-12, -65, Math.toRadians(90)))
                 .lineToLinearHeading(new Pose2d(-12, -12, Math.toRadians(90)))
-                //place to put down preloaded cone/scoring utility
+                .addDisplacementMarker(() -> {
+                    //place to put down preloaded cone/scoring utility
+                    bot.motorTo(TeleOpConfig.SLIDE_MOTOR_TOP_POS);
+                })
+                .waitSeconds(4)
+                //Change time to whatever we find after arm goes up
+                .addTemporalMarker(5, bot::openClaw)
+                .addTemporalMarker(5.3, bot::closeClaw)
+                .addTemporalMarker(5.6, () -> {bot.motorTo(0);})
                 .lineToLinearHeading(new Pose2d(-25, -12, Math.toRadians(90)))
-                //place to load a cone/scoring utility
+                .addDisplacementMarker(() -> {
+                    //place to load a cone/scoring utility
+                })
                 .lineToLinearHeading(new Pose2d(-55, -12, Math.toRadians(180)))
                 .lineToLinearHeading(new Pose2d(-40, -12, Math.toRadians(180)))
                 .lineToLinearHeading(new Pose2d(-25, -12, Math.toRadians(90)))
-                //place to put down a preloaded cone/scoring utility
+                .addDisplacementMarker(() -> {
+                    //place to put down a preloaded cone/scoring utility
+                })
                 .lineToLinearHeading(new Pose2d(-35, -12, Math.toRadians(90)))
                 .build();
 
@@ -66,29 +81,9 @@ public class Red_1_1 extends LinearOpMode {
 
         //ConeDetectionPipeline.Color guessedColor = pipeline.getColorGuess();
 
+        drive.followTrajectorySequenceAsync(traj);
         while (opModeIsActive() && !isStopRequested()) {
             bot.motorUpdate();
-            // I WANT COROUTINES SO BAD, WHY DO WE NOT USE KOTLIN
-            switch (currentStep) {
-                case 1:
-                    drive.followTrajectorySequenceAsync(traj);
-                    currentStep++;
-                    break;
-                case 2:
-                    if (!drive.isBusy()) currentStep++;
-                    break;
-                case 3:
-                    bot.motorTo(TeleOpConfig.SLIDE_MOTOR_TOP_POS);
-                    currentStep++;
-                    break;
-                case 4:
-                    if (!bot.isSlideBusy()) currentStep++;
-                    break;
-                case 5:
-                    //Do Claw Here, can be pausing
-                default:
-                    break;
-            }
         }
     }
 }
