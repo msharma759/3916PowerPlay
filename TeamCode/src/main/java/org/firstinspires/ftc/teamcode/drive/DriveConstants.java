@@ -45,7 +45,7 @@ public class DriveConstants {
      * angular distances although most angular parameters are wrapped in Math.toRadians() for
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
-    public static double WHEEL_RADIUS = 1.9685; // in
+    public static double WHEEL_RADIUS = 1.8898; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
     public static double TRACK_WIDTH = 14.5; // in
 
@@ -70,27 +70,27 @@ public class DriveConstants {
      * Note from LearnRoadRunner.com:
      * The velocity and acceleration constraints were calculated based on the following equation:
      * ((MAX_RPM / 60) * GEAR_RATIO * WHEEL_RADIUS * 2 * Math.PI) * 0.85
-     * Resulting in 54.75616008127896 in/s.
+     * Resulting in 52.56702632542596 in/s.
      * This is only 85% of the theoretical maximum velocity of the bot, following the recommendation above.
      * This is capped at 85% because there are a number of variables that will prevent your bot from actually
      * reaching this maximum velocity: voltage dropping over the game, bot weight, general mechanical inefficiencies, etc.
      * However, you can push this higher yourself if you'd like. Perhaps raise it to 90-95% of the theoretically
-     * max velocity. The theoretically maximum velocity is 64.4190118603282 in/s.
+     * max velocity. The theoretically maximum velocity is 61.843560382854065 in/s.
      * Just make sure that your bot can actually reach this maximum velocity. Path following will be detrimentally
      * affected if it is aiming for a velocity not actually possible.
      *
      * The maximum acceleration is somewhat arbitrary and it is recommended that you tweak this yourself based on
      * actual testing. Just set it at a reasonable value and keep increasing until your path following starts
-     * to degrade. As of now, it simply mirrors the velocity, resulting in 54.75616008127896 in/s/s
+     * to degrade. As of now, it simply mirrors the velocity, resulting in 52.56702632542596 in/s/s
      *
      * Maximum Angular Velocity is calculated as: maximum velocity / trackWidth * (180 / Math.PI) but capped at 360°/s.
      * You are free to raise this on your own if you would like. It is best determined through experimentation.
 
      */
-    public static double MAX_VEL = 54.75616008127896;
-    public static double MAX_ACCEL = 54.75616008127896;
-    public static double MAX_ANG_VEL = Math.toRadians(216.3653017241379);
-    public static double MAX_ANG_ACCEL = Math.toRadians(216.3653017241379);
+    public static double MAX_VEL = 52.56702632542596;
+    public static double MAX_ACCEL = 52.56702632542596;
+    public static double MAX_ANG_VEL = Math.toRadians(207.71508620689653);
+    public static double MAX_ANG_ACCEL = Math.toRadians(207.71508620689653);
 
 
     public static double encoderTicksToInches(double ticks) {
