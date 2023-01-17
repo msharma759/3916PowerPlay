@@ -52,7 +52,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void initBot(HardwareMap hw) {
         super.init(hw);
 
-        clawServo = new SimpleServo(hw, "allen servo", 0,180);
+        clawServo = new SimpleServo(hw, "claw servo", 0,180);
 
         slideMotor = new MotorEx(hw, "slide motor");
         slideMotor.setRunMode(Motor.RunMode.RawPower);
