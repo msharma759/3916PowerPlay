@@ -150,6 +150,14 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             if (Gamepad2.getButton(GamepadKeys.Button.B)) {
                 bot.motorTo(0);
             }
+            
+            if (Gamepad2.getButton((GamepadKeys.Button.DPAD_DOWN))) {
+                bot.closeClaw();
+            }
+
+            if (Gamepad2.getButton((GamepadKeys.Button.DPAD_UP))) {
+                bot.openClaw();
+            }
             /*
                ////////////////////////// TELEMETRY //////////////////////////
             */
