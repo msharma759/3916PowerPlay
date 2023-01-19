@@ -25,6 +25,10 @@ public class DriveConstants {
     public static final double TICKS_PER_REV = 537.6;
     public static final double MAX_RPM = 312.5;
 
+    public static double PERPENDICULAR_WHEEL_X = -1;
+    public static double PERPENDICULAR_WHEEL_Y = -3;
+
+
     /*
      * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.
      * Set this flag to false if drive encoders are not present and an alternative localization
@@ -47,7 +51,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.8898; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 14.5; // in
+    public static double TRACK_WIDTH = 14.46; // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -89,8 +93,8 @@ public class DriveConstants {
      */
     public static double MAX_VEL = 52.56702632542596;
     public static double MAX_ACCEL = 52.56702632542596;
-    public static double MAX_ANG_VEL = Math.toRadians(207.71508620689653);
-    public static double MAX_ANG_ACCEL = Math.toRadians(207.71508620689653);
+    public static double MAX_ANG_VEL = Math.toRadians(22.81645319414053);
+    public static double MAX_ANG_ACCEL = 6.82629113357;
 
 
     public static double encoderTicksToInches(double ticks) {
