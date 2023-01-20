@@ -48,10 +48,10 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
 
         //Initialize bot
         bot.initBot(hardwareMap);
-        RevIMU imu = new RevIMU(hardwareMap);
+        //RevIMU imu = new RevIMU(hardwareMap);
         GamepadEx Gamepad1 = new GamepadEx(gamepad1);
         GamepadEx Gamepad2 = new GamepadEx(gamepad2);
-        imu.init();
+        //imu.init();
 
         List<LynxModule> allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
@@ -128,7 +128,8 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             }*/
 
             //Send the X, Y, and rotation (Z) to the mecanum drive method
-            bot.driveFieldCentric(x, y, z, precisionMode,imu);
+            //bot.driveFieldCentric(x, y, z, precisionMode,imu);
+            bot.driveRobotCentric(x, y, z, precisionMode);
 
             // Other Motors
             //bot.runSlideMotor(g1triggers);
