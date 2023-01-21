@@ -154,15 +154,18 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
                 bot.slideMotor.set(1);
                 bot.slideMotor2.set(1);
             } else {
-                bot.slideMotor.set(0);
-                bot.slideMotor2.set(0);
+                bot.motorUpdate();
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.X)) {
+                bot.motorTo(0);
+                bot.slideBusy = true;
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
                 bot.openClaw();
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
                 bot.closeClaw();
             } else {
-                bot.clawServo.stop();
+                bot.clawServo.set(TeleOpConfig.SERVO_OFFSET);
             }
             /*
                ////////////////////////// TELEMETRY //////////////////////////

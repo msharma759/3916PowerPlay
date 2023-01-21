@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive.opmode;
+package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -25,22 +25,22 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
  * is recommended that you use the FollowerPIDTuner opmode for further fine tuning.
  */
 @Config
-@Autonomous(group = "drive")
-public class Red_1_Park extends LinearOpMode {
+@Autonomous(group = "drive", name="Red Right Park")
+public class Blue_2_Park extends LinearOpMode {
 
-    public static double DISTANCE = 24;
+    public static double DISTANCE = 18;
 
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
 
-        Trajectory parkLeft = drive.trajectoryBuilder(new Pose2d(-35.00, -60.00, Math.toRadians(270)))
-                        .strafeLeft(DISTANCE)
+        Trajectory parkRight = drive.trajectoryBuilder(new Pose2d(35.00, -60.00, Math.toRadians(90)))
+                        .strafeRight(DISTANCE)
                         .build();
 
         waitForStart();
         
-        drive.followTrajectory(parkLeft);
+        drive.followTrajectory(parkRight);
     }
 }

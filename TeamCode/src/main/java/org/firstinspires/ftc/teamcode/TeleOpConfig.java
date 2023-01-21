@@ -12,6 +12,7 @@ public class TeleOpConfig {
     public static double SLIDE_MOTOR_TOLERANCE = 10;
     public static int SLIDE_MOTOR_TEST_POS = 5000;
     public static int SLIDE_MOTOR_TOP_POS = 5000;
+    public static double SERVO_OFFSET = 0.0000000000001;
 //    public static double SLIDE_POS_LOW = 100;
 //    public static double SLIDE_POS_MIDDLE = 200;
 //    public static double SLIDE_POS_TOP = 300;
