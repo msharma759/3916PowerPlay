@@ -27,7 +27,8 @@ import java.util.Vector;
                     .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 18)
                     .followTrajectorySequence(drive ->
                                     drive.trajectorySequenceBuilder(new Pose2d(-35.00, 60.00, Math.toRadians(270)))
-                                            .strafeRight(24.0)
+                                            .lineTo(new Vector2d(-56, 60))
+                                            .back(3)
                                             .build()
                     );
 
