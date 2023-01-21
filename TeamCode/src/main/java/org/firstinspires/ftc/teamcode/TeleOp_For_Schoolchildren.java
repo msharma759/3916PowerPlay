@@ -80,6 +80,7 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
                 hub.clearBulkCache();
             }
 
+
             //Sensor Inputs
 
             /*
@@ -155,6 +156,13 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             } else {
                 bot.slideMotor.set(0);
                 bot.slideMotor2.set(0);
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
+                bot.openClaw();
+            } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
+                bot.closeClaw();
+            } else {
+                bot.clawServo.stop();
             }
             /*
                ////////////////////////// TELEMETRY //////////////////////////

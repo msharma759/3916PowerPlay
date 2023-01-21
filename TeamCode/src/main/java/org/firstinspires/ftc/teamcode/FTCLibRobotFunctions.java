@@ -1,11 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import static org.firstinspires.ftc.teamcode.TeleOpConfig.CLAW_SERVO_MIN;
+
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
+import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.checkerframework.checker.units.qual.C;
 
 /**
  * -- TEAM 3916 --
@@ -37,8 +42,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //public MotorEx flywheelMotor;
     public MotorEx slideMotor;
     public MotorEx slideMotor2;
-    public ServoEx clawServo;
+    public CRServo clawServo;
     private double slideMotorCurrentTarget = 0;
+    private double clawServoCurrentTarget = 0;
+
     private boolean slideBusy = false;
 //    public SlidePosition currentSlidePosition = SlidePosition.BOTTOM;
 //    public enum SlidePosition{
@@ -52,7 +59,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void initBot(HardwareMap hw) {
         super.init(hw);
 
-        clawServo = new SimpleServo(hw, "claw servo", 0,180);
+        clawServo = new CRServo(hw, "claw servo");
 
         slideMotor = new MotorEx(hw, "slide motor");
         slideMotor.setRunMode(Motor.RunMode.RawPower);
@@ -85,6 +92,14 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         return motorPos - tolerance < target && motorPos + tolerance > target;
     }
 
+
+
+    private boolean servoAtPos(CRServo motor, double target, double tolerance) {
+        double motorPos = motor.getCurrentPosition();
+        return motorPos - tolerance < target && motorPos + tolerance > target;
+    }
+
+
     /**
      * Call this method every loop, runs the slide motor
      */
@@ -113,11 +128,11 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
 
     public void openClaw() {
-        clawServo.setPosition(TeleOpConfig.CLAW_SERVO_MAX);
+        clawServo.set(1);
     }
 
     public void closeClaw() {
-        clawServo.setPosition(TeleOpConfig.CLAW_SERVO_MIN);
+        clawServo.set(-1);
     }
 
 //    public boolean inRange(double num, double range) {
