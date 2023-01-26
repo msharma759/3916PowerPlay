@@ -6,13 +6,12 @@ public class TeleOpConfig {
     public static double PRECISION_POWER_MULTIPLIER = 0.5; //Multiplier for motor power (for precision mode)
     public static double PRECISION_TURN_MULTIPLIER = 0.5; // Multiplier for turning speed (for precision mode)
     public static double STICK_DEAD_ZONE = 0.03;
-    public static double CLAW_SERVO_MAX = 20;
-    public static double CLAW_SERVO_MIN = 0;
+    public static double CLAW_SERVO_MAX = 175;
+    public static double CLAW_SERVO_MIN = 40;
     public static double SLIDE_MOTOR_COEFFICIENT = 0.05;
     public static double SLIDE_MOTOR_TOLERANCE = 10;
     public static int SLIDE_MOTOR_TEST_POS = 5000;
     public static int SLIDE_MOTOR_TOP_POS = 5000;
-    public static double SERVO_OFFSET = 0.0000000000001;
 //    public static double SLIDE_POS_LOW = 100;
 //    public static double SLIDE_POS_MIDDLE = 200;
 //    public static double SLIDE_POS_TOP = 300;
