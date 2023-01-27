@@ -149,10 +149,8 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             //I mean you could break the robot, but you probably shouldnt be able to
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 bot.slideMotor.set(-1);
-                bot.slideMotor2.set(-1);
             } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
                 bot.slideMotor.set(1);
-                bot.slideMotor2.set(1);
             } else {
                 bot.motorUpdate();
             }
@@ -162,10 +160,10 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
                 bot.openClaw();
+                telemetry.addLine("DUP");
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
                 bot.closeClaw();
-            } else {
-                bot.clawServo.set(TeleOpConfig.SERVO_OFFSET);
+                telemetry.addLine("DDOWN");
             }
             /*
                ////////////////////////// TELEMETRY //////////////////////////

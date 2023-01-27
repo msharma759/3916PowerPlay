@@ -29,7 +29,6 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class Red_2_Park extends LinearOpMode {
 
     public static double DISTANCE = 18;
-
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -37,6 +36,7 @@ public class Red_2_Park extends LinearOpMode {
 
         Trajectory parkLeft = drive.trajectoryBuilder(new Pose2d(35.00, 60.00, Math.toRadians(270)))
                         .strafeLeft(DISTANCE)
+                        .back(5)
                         .build();
 
         waitForStart();
