@@ -4,24 +4,26 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.vision.ConeDetectionPipeline;
-import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
+import org.firstinspires.ftc.teamcode.vision.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.vision.AprilTagDetectionPipeline;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.vision.AprilTagDetectionPipeline;
+import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
-import org.openftc.easyopencv.OpenCvPipeline;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+
+import java.util.ArrayList;
 
 /*
  * Op mode for preliminary tuning of the follower PID coefficients (located in the drive base
@@ -43,35 +45,59 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(group = "drive")
 public class Blue_1_Signal extends LinearOpMode {
 
+    double fx = 578.272;
+    double fy = 578.272;
+    double cx = 402.145;
+    double cy = 221.506;
+
+    // UNITS ARE METERS
+    double tagsize = 0.04445;
+
+    final byte leftTag = 1;
+    final byte midTag = 2;
+    final byte rightTag = 3;
+
+    AprilTagDetection tagOfInterest = null;
+
     @Override
     public void runOpMode() throws InterruptedException {
-        WebcamName webcamName = hardwareMap.get(WebcamName.class, "WEBCAM");
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
+        AprilTagDetectionPipeline aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
 
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
-        bot.initBot(hardwareMap);
-
-        final ConeDetectionPipeline.Color[] color = new ConeDetectionPipeline.Color[1];
-
+        camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
             {
-                camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-                ConeDetectionPipeline coneDetectionPipeline = new ConeDetectionPipeline();
-                camera.setPipeline(coneDetectionPipeline);
-                color[0] = coneDetectionPipeline.getColorGuess();
+                camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
             }
+
             @Override
             public void onError(int errorCode)
             {
-                /*
-                 * This will be called if the camera could not be opened
-                 */
+
             }
         });
+
+        ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+        if (currentDetections.size() != 0)  {
+            boolean tagFound = false;
+
+            for(AprilTagDetection tag : currentDetections) {
+                if (tag.id == leftTag || tag.id == midTag || tag.id == rightTag) {
+                    tagOfInterest = tag;
+                    tagFound = true;
+                    break;
+                }
+            }
+        }
+
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
+        bot.initBot(hardwareMap);
+
 
         Pose2d startPose = new Pose2d(-35.00, 60.00, Math.toRadians(270));
 
@@ -91,12 +117,12 @@ public class Blue_1_Signal extends LinearOpMode {
 
         waitForStart();
 
-        switch (color[0]) {
-            case Yellow:
+        switch (tagOfInterest.id) {
+            case leftTag:
                 drive.followTrajectorySequence(parkZone1);
-            case Cyan:
+            case midTag:
                 drive.followTrajectorySequence(parkZone2);
-            case Magenta:
+            case rightTag:
                 drive.followTrajectorySequence(parkZone3);
         }
 
