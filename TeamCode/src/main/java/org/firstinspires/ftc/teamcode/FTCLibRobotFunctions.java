@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import static org.firstinspires.ftc.teamcode.TeleOpConfig.CLAW_SERVO_MAX;
 import static org.firstinspires.ftc.teamcode.TeleOpConfig.CLAW_SERVO_MIN;
 
 import com.arcrobotics.ftclib.hardware.ServoEx;
@@ -41,12 +42,10 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //Example:
     //public MotorEx flywheelMotor;
     public MotorEx slideMotor;
-    public MotorEx slideMotor2;
-    public CRServo clawServo;
+    public ServoEx clawServo;
     private double slideMotorCurrentTarget = 0;
-    private double clawServoCurrentTarget = 0;
 
-    private boolean slideBusy = false;
+    public boolean slideBusy = false;
 //    public SlidePosition currentSlidePosition = SlidePosition.BOTTOM;
 //    public enum SlidePosition{
 //        BOTTOM,
@@ -59,17 +58,12 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public void initBot(HardwareMap hw) {
         super.init(hw);
 
-        clawServo = new CRServo(hw, "claw servo");
+        clawServo = new SimpleServo(hw, "claw servo", 0, 300);
 
         slideMotor = new MotorEx(hw, "slide motor");
         slideMotor.setRunMode(Motor.RunMode.RawPower);
         slideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         slideMotor.encoder.reset();
-
-        slideMotor2 = new MotorEx(hw, "slides motor 2");
-        slideMotor2.setRunMode(Motor.RunMode.RawPower);
-        slideMotor2.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        slideMotor2.encoder.reset();
 
         slideMotor.setPositionCoefficient(TeleOpConfig.SLIDE_MOTOR_COEFFICIENT);
         slideMotor.setPositionTolerance(TeleOpConfig.SLIDE_MOTOR_TOLERANCE);
@@ -93,31 +87,21 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
 
 
-
-    private boolean servoAtPos(CRServo motor, double target, double tolerance) {
-        double motorPos = motor.getCurrentPosition();
-        return motorPos - tolerance < target && motorPos + tolerance > target;
-    }
-
-
     /**
      * Call this method every loop, runs the slide motor
      */
     public void motorUpdate() {
         int curPos = slideMotor.getCurrentPosition();
-        if (!motorAtPos(slideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE)) {
+        if (!motorAtPos(slideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE) && slideBusy) {
             slideBusy = true;
             if (curPos < slideMotorCurrentTarget) {
                 slideMotor.set(1);
-                slideMotor2.set(1);
             } else {
                 slideMotor.set(-1);
-                slideMotor2.set(-1);
             }
         } else {
             slideBusy = false;
             slideMotor.set(0);
-            slideMotor2.set(0);
         }
     }
 
@@ -128,11 +112,13 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     }
 
     public void openClaw() {
-        clawServo.set(1);
+        clawServo.turnToAngle(TeleOpConfig.CLAW_SERVO_MAX);
+        //clawServo.set(1);
     }
 
     public void closeClaw() {
-        clawServo.set(-1);
+        clawServo.turnToAngle(TeleOpConfig.CLAW_SERVO_MIN);
+        //clawServo.set(-1);
     }
 
 //    public boolean inRange(double num, double range) {

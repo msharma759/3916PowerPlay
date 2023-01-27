@@ -149,20 +149,21 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             //I mean you could break the robot, but you probably shouldnt be able to
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 bot.slideMotor.set(-1);
-                bot.slideMotor2.set(-1);
             } else if (Gamepad2.getButton(GamepadKeys.Button.B)) {
                 bot.slideMotor.set(1);
-                bot.slideMotor2.set(1);
             } else {
-                bot.slideMotor.set(0);
-                bot.slideMotor2.set(0);
+                bot.motorUpdate();
+            }
+            if (Gamepad2.getButton(GamepadKeys.Button.X)) {
+                bot.motorTo(0);
+                bot.slideBusy = true;
             }
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
                 bot.openClaw();
+                telemetry.addLine("DUP");
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
                 bot.closeClaw();
-            } else {
-                bot.clawServo.stop();
+                telemetry.addLine("DDOWN");
             }
             /*
                ////////////////////////// TELEMETRY //////////////////////////
@@ -173,13 +174,7 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
             telemetry.addData("Slide Motor Encoder", "pos: "+bot.slideMotor.encoder.getPosition());
-            telemetry.addData("Slide Motor Position", "pos: "+bot.slideMotor.getCurrentPosition());
-            telemetry.addData("X", x);
-            telemetry.addData("Y", y);
-            telemetry.addData("Z", z);
-            telemetry.addData("leftX", leftX);
-            telemetry.addData("leftY", leftY);
-            telemetry.addData("rightX", rightX);
+            telemetry.addData("Precision Mode", precisionMode);
             telemetry.update();
         }
     }
