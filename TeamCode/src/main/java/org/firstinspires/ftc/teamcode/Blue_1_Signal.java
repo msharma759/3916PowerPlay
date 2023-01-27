@@ -104,8 +104,12 @@ public class Blue_1_Signal extends LinearOpMode {
 
             }
         });
-
+        int i = 0;
         ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+        while (currentDetections.size() <= 0 && i < 100) {
+            currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+            i++;
+        }
         if (currentDetections.size() != 0)  {
             boolean tagFound = false;
 
@@ -118,18 +122,19 @@ public class Blue_1_Signal extends LinearOpMode {
             }
         }
 
-        sleep(1000);
-        bot.closeClaw();
-
         switch (tagOfInterest.id) {
             case leftTag:
                 drive.followTrajectorySequence(parkZone1);
+                break;
             case midTag:
                 drive.followTrajectorySequence(parkZone2);
+                break;
             case rightTag:
                 drive.followTrajectorySequence(parkZone3);
+                break;
             default:
-                Telemetry.Log
+                drive.followTrajectorySequence(parkZone2);
+                break;
         }
 
         while (opModeIsActive() && !isStopRequested()) {
