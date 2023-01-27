@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.vision.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.vision.AprilTagDetectionPipeline;
@@ -62,6 +63,29 @@ public class Blue_1_Signal extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
+        bot.initBot(hardwareMap);
+
+
+        Pose2d startPose = new Pose2d(-35.00, 60.00, Math.toRadians(270));
+
+        TrajectorySequence parkZone1 = drive.trajectorySequenceBuilder(startPose)
+                .strafeLeft(24)
+                .forward(24)
+                .build();
+
+        TrajectorySequence parkZone2 = drive.trajectorySequenceBuilder(startPose)
+                .forward(24)
+                .build();
+
+        TrajectorySequence parkZone3 = drive.trajectorySequenceBuilder(startPose)
+                .strafeRight(24)
+                .forward(24)
+                .build();
+
+        waitForStart();
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
         AprilTagDetectionPipeline aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
 
@@ -94,28 +118,8 @@ public class Blue_1_Signal extends LinearOpMode {
             }
         }
 
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        FTCLibRobotFunctions bot = new FTCLibRobotFunctions();
-        bot.initBot(hardwareMap);
-
-
-        Pose2d startPose = new Pose2d(-35.00, 60.00, Math.toRadians(270));
-
-        TrajectorySequence parkZone1 = drive.trajectorySequenceBuilder(startPose)
-                .strafeLeft(24)
-                .forward(24)
-                .build();
-
-        TrajectorySequence parkZone2 = drive.trajectorySequenceBuilder(startPose)
-                .forward(24)
-                .build();
-
-        TrajectorySequence parkZone3 = drive.trajectorySequenceBuilder(startPose)
-                .strafeRight(24)
-                .forward(24)
-                .build();
-
-        waitForStart();
+        sleep(1000);
+        bot.closeClaw();
 
         switch (tagOfInterest.id) {
             case leftTag:
@@ -124,6 +128,8 @@ public class Blue_1_Signal extends LinearOpMode {
                 drive.followTrajectorySequence(parkZone2);
             case rightTag:
                 drive.followTrajectorySequence(parkZone3);
+            default:
+                Telemetry.Log
         }
 
         while (opModeIsActive() && !isStopRequested()) {
