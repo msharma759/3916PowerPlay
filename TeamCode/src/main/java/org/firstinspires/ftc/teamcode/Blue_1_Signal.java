@@ -72,19 +72,19 @@ public class Blue_1_Signal extends LinearOpMode {
         Pose2d startPose = new Pose2d(-35.00, 60.00, Math.toRadians(270));
 
         TrajectorySequence parkZone1 = drive.trajectorySequenceBuilder(startPose)
-                .strafeLeft(24)
-                .forward(24)
+                .lineTo(new Vector2d(-12.0, 60.0))
+                .lineTo(new Vector2d(-12, 36.0))
                 .build();
 
         TrajectorySequence parkZone2 = drive.trajectorySequenceBuilder(startPose)
-                .forward(24)
+                .lineTo(new Vector2d(-36.0, 36.0))
                 .build();
 
         TrajectorySequence parkZone3 = drive.trajectorySequenceBuilder(startPose)
-                .strafeRight(24)
-                .forward(24)
+                .lineTo(new Vector2d(-48.00, 60.00))
+                .lineTo(new Vector2d(-36.00, 60.00))
                 .build();
-
+        
         waitForStart();
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
         AprilTagDetectionPipeline aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
