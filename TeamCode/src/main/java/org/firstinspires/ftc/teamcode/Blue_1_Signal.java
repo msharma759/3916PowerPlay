@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.vision.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.vision.AprilTagDetectionPipeline;
@@ -24,7 +25,6 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /*
  * Op mode for preliminary tuning of the follower PID coefficients (located in the drive base
@@ -72,17 +72,17 @@ public class Blue_1_Signal extends LinearOpMode {
         Pose2d startPose = new Pose2d(-35.00, 60.00, Math.toRadians(270));
 
         TrajectorySequence parkZone1 = drive.trajectorySequenceBuilder(startPose)
-                .lineTo(new Vector2d(-12.0, 60.0))
-                .lineTo(new Vector2d(-12, 36.0))
+                .strafeLeft(24)
+                .forward(24)
                 .build();
 
         TrajectorySequence parkZone2 = drive.trajectorySequenceBuilder(startPose)
-                .lineTo(new Vector2d(-36.0, 36.0))
+                .forward(24)
                 .build();
 
         TrajectorySequence parkZone3 = drive.trajectorySequenceBuilder(startPose)
-                .lineTo(new Vector2d(-48.00, 60.00))
-                .lineTo(new Vector2d(-36.00, 60.00))
+                .strafeRight(24)
+                .forward(24)
                 .build();
 
         waitForStart();
@@ -128,6 +128,8 @@ public class Blue_1_Signal extends LinearOpMode {
                 drive.followTrajectorySequence(parkZone2);
             case rightTag:
                 drive.followTrajectorySequence(parkZone3);
+            default:
+                Telemetry.Log
         }
 
         while (opModeIsActive() && !isStopRequested()) {
