@@ -71,18 +71,20 @@ public class Blue_1_Signal extends LinearOpMode {
 
         Pose2d startPose = new Pose2d(-35.00, 60.00, Math.toRadians(270));
 
+        drive.setPoseEstimate(startPose);
+
         TrajectorySequence parkZone1 = drive.trajectorySequenceBuilder(startPose)
                 .lineTo(new Vector2d(-12.0, 60.0))
-                .lineTo(new Vector2d(-12, 36.0))
+                .lineTo(new Vector2d(-12, 34.0))
                 .build();
 
         TrajectorySequence parkZone2 = drive.trajectorySequenceBuilder(startPose)
-                .lineTo(new Vector2d(-36.0, 36.0))
+                .lineTo(new Vector2d(-35.0, 34.0))
                 .build();
 
         TrajectorySequence parkZone3 = drive.trajectorySequenceBuilder(startPose)
-                .lineTo(new Vector2d(-48.00, 60.00))
-                .lineTo(new Vector2d(-36.00, 60.00))
+                .lineTo(new Vector2d(-58.50, 60.00))
+                .lineTo(new Vector2d(-58.50, 34.00))
                 .build();
         
         waitForStart();
@@ -104,11 +106,9 @@ public class Blue_1_Signal extends LinearOpMode {
 
             }
         });
-        int i = 0;
         ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
-        while (currentDetections.size() <= 0 && i < 100) {
+        while (currentDetections.size() <= 0 && opModeIsActive() && !isStopRequested() && getRuntime() < 15) {
             currentDetections = aprilTagDetectionPipeline.getLatestDetections();
-            i++;
         }
         if (currentDetections.size() != 0)  {
             boolean tagFound = false;
