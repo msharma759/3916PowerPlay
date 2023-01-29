@@ -46,10 +46,10 @@ import java.util.ArrayList;
 @Autonomous(group = "drive")
 public class Blue_1_Signal extends LinearOpMode {
 
-    double fx = 578.272;
-    double fy = 578.272;
-    double cx = 402.145;
-    double cy = 221.506;
+    double fx = 821.993;
+    double fy = 821.993;
+    double cx = 330.489;
+    double cy = 248.997;
 
     // UNITS ARE METERS
     double tagsize = 0.04445;
@@ -97,7 +97,7 @@ public class Blue_1_Signal extends LinearOpMode {
             @Override
             public void onOpened()
             {
-                camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
+                camera.startStreaming(640,480, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
