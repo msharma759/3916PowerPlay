@@ -3,13 +3,16 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.TeleOpConfig.CLAW_SERVO_MAX;
 import static org.firstinspires.ftc.teamcode.TeleOpConfig.CLAW_SERVO_MIN;
+import static org.firstinspires.ftc.teamcode.TeleOpConfig.PIDF_COEFFICIENTS_SLIDE_MOTOR;
 
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.checkerframework.checker.units.qual.C;
 
@@ -24,6 +27,7 @@ import org.checkerframework.checker.units.qual.C;
  * @author Gabrian Chua
  * @author Jason Armbruster
  * @author Vikram Krishnakumar
+ * @author Maulik Verma
  *
  * @since November 2020
  * @version October 2021
@@ -44,6 +48,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     public MotorEx slideMotor;
     public ServoEx clawServo;
     private double slideMotorCurrentTarget = 0;
+    public PIDFController pidSlideMotor;
 
     public boolean slideBusy = false;
 //    public SlidePosition currentSlidePosition = SlidePosition.BOTTOM;
@@ -57,7 +62,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //initialize motors and servos
     public void initBot(HardwareMap hw) {
         super.init(hw);
-
+        pidSlideMotor = new PIDFController(PIDF_COEFFICIENTS_SLIDE_MOTOR.p, PIDF_COEFFICIENTS_SLIDE_MOTOR.i, PIDF_COEFFICIENTS_SLIDE_MOTOR.d, PIDF_COEFFICIENTS_SLIDE_MOTOR.f);
+        pidSlideMotor.setTolerance(TeleOpConfig.SLIDE_MOTOR_TOLERANCE);
         clawServo = new SimpleServo(hw, "claw servo", 0, 300);
 
         slideMotor = new MotorEx(hw, "slide motor");
@@ -90,6 +96,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     /**
      * Call this method every loop, runs the slide motor
      */
+
+
     public void motorUpdate() {
         int curPos = slideMotor.getCurrentPosition();
         if (!motorAtPos(slideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE) && slideBusy) {
@@ -103,6 +111,17 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
             slideBusy = false;
             slideMotor.set(0);
         }
+    }
+
+    public void motorUpdate(double pos){
+        pidSlideMotor.setSetPoint(pos);
+        double output = 0;
+        if(!pidSlideMotor.atSetPoint()){
+             output = pidSlideMotor.calculate(
+                    slideMotor.getCurrentPosition()  // the measured value
+            );
+        }
+        slideMotor.setVelocity(output);
     }
 
     public boolean isSlideBusy() {return slideBusy;}

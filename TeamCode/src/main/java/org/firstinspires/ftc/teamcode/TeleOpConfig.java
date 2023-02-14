@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.controller.PIDFController;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 @Config
 public class TeleOpConfig {
@@ -12,6 +14,7 @@ public class TeleOpConfig {
     public static double SLIDE_MOTOR_TOLERANCE = 10;
     public static int SLIDE_MOTOR_TEST_POS = 5000;
     public static int SLIDE_MOTOR_TOP_POS = 5000;
+    public static PIDFCoefficients PIDF_COEFFICIENTS_SLIDE_MOTOR = new PIDFCoefficients(0, 0, 0, 0);
 //    public static double SLIDE_POS_LOW = 100;
 //    public static double SLIDE_POS_MIDDLE = 200;
 //    public static double SLIDE_POS_TOP = 300;
