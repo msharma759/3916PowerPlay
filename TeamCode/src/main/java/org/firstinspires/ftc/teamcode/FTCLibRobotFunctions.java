@@ -47,6 +47,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
     //public MotorEx flywheelMotor;
     public MotorEx slideMotor;
     public ServoEx clawServo;
+    public double slideMotorTargetVelocity = 0;
     private double slideMotorCurrentTarget = 0;
     public PIDFController pidSlideMotor;
 
@@ -122,6 +123,7 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
             );
         }
         slideMotor.setVelocity(output);
+        slideMotorTargetVelocity = output;
     }
 
     public boolean isSlideBusy() {return slideBusy;}
