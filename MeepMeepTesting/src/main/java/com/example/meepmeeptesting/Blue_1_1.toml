@@ -1,12 +1,10 @@
-drive.trajectorySequenceBuilder(new Pose2d(-35.00, 63.00, 0))
-.lineToConstantHeading(new Vector2d(-12.00, 60.00))
-.lineToConstantHeading(new Vector2d(-12.00, 23.0))
-.lineToLinearHeading(new Pose2d(-12.00, 12, Math.toRadians(0)))
-.lineToLinearHeading(new Pose2d(-55.00, 12, Math.toRadians(180)))
-.lineToLinearHeading(new Pose2d(-24.00, 12, Math.toRadians(270)))
-.lineToLinearHeading(new Pose2d(-35.50, 12, Math.toRadians(90)))
-
 initialPosition = [-35, 63, 0];
 traj1 = {type = "lineToConstantHeading", args = [[40, -32]], 90]}
 traj2 = {type = "lineToConstantHeading", args = [-12, 60]}
-traj3 = {type = "linetoLinearHeading"}
+traj3 = {type = "linetoLinearHeading", args = [-12, 23]}
+traj4 = {type = "lineToLinearHeading", args = [[-12, 12], 0]}
+traj5 = {type = "lineToLinearHeading", args = [[-55, 12], 180]}
+traj6 = {type = "lineToLinearHeading", args = [[-24, 12], 270]}
+traj7 = {type = "lineToLinearHeading", args =[[-35.5, 12], 90]}
+
+sequence = [traj1, traj2, traj3, traj4, traj5, traj6, traj7]
