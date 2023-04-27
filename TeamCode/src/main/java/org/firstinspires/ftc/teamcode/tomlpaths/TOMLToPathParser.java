@@ -46,13 +46,13 @@ public class TOMLToPathParser {
         double lastX = (double) ((tomlSequences.get(1).getArray("initialPosition")).toList()).get(0);
         double lastY = (double) ((tomlSequences.get(1).getArray("initialPosition")).toList()).get(1);
 
-        for (int i = 0; i < tomlSequences.size() - 1; i++)
+        for (int i = 0; i < tomlSequences.get(0).getArray("sequence").toList().size() - 1; i++)
         {
             List list = (tomlSequences.get(0)).getArray("sequence.traj" + (i+1) + ".args").toList();
-            double[] array = (double[]) list.get(0);
+            double[] array = (double[]) list.get(0); // x, y
 
             Pose2d start = new Pose2d(lastX, lastY, lastHeading);
-            switch () {
+            switch  () {
 
             }
             Pose2d end = new Pose2d((array[0], array[1], 0);
