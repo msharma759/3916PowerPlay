@@ -5,13 +5,13 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryMarker;
 
 import java.util.List;
 
-public abstract class SequenceSegment {
+public class SequenceSegment {
     private final double duration;
     private final Pose2d startPose;
     private final Pose2d endPose;
     private final List<TrajectoryMarker> markers;
 
-    protected SequenceSegment(
+    public SequenceSegment(
             double duration,
             Pose2d startPose, Pose2d endPose,
             List<TrajectoryMarker> markers
