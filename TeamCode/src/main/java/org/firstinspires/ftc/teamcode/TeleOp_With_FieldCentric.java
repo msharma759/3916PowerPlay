@@ -54,7 +54,7 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
 
         List<LynxModule> allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
-            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
         //Initialize working variables
@@ -73,9 +73,6 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-            for (LynxModule hub : allHubs) {
-                hub.clearBulkCache();
-            }
 
             //Sensor Inputs
 
