@@ -9,6 +9,7 @@ import com.noahbres.meepmeep.roadrunner.trajectorysequence.TrajectorySequence;
 
 /**
      * @author Jason Armbruster
+     * @author Anna Lynch
      */
 
     public class Blue_1_ParkZone2 {
@@ -16,17 +17,15 @@ import com.noahbres.meepmeep.roadrunner.trajectorysequence.TrajectorySequence;
 
             MeepMeep meepMeep = new MeepMeep(800);
 
-            Pose2d startPose = new Pose2d(-35.00, 60.00, Math.toRadians(270));
-
-            TrajectorySequence zone1 = drive.trajectorySequenceBuilder()
-                    .strafeRight(24)
-                    .forward(30)
-                    .build();
-
             RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                     // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                     .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 18)
-                    .followTrajectorySequence(zone1);
+                    .followTrajectorySequence(drive ->
+                            drive.trajectorySequenceBuilder(new Pose2d(-35.00, 60.00, Math.toRadians(270)))
+                                    .forward(30)
+                                    .build()
+
+                    );
 
             meepMeep.setBackground(MeepMeep.Background.FIELD_POWERPLAY_OFFICIAL)
                     .setDarkMode(true)
