@@ -1,5 +1,5 @@
-initialPosition = [-35, 63, 0];
-traj1 = {type = "lineToConstantHeading", args = [[40, -32]], 90]}
+initialPosition = [-35, 63, 0]
+traj1 = {type = "lineToConstantHeading", args = [[40, -32], 90]}
 traj2 = {type = "lineToConstantHeading", args = [-12, 60]}
 traj3 = {type = "linetoLinearHeading", args = [-12, 23]}
 traj4 = {type = "lineToLinearHeading", args = [[-12, 12], 0]}

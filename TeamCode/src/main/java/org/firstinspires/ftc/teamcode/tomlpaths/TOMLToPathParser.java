@@ -1,10 +1,16 @@
 package org.firstinspires.ftc.teamcode.tomlpaths;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import android.annotation.SuppressLint;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.TrajectoryMarker;
 
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
 import org.tomlj.Toml;
 import org.tomlj.TomlArray;
@@ -14,6 +20,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
+/**
+ * TOML Parser method to use to avoid compiling every time a path is changed.
+ *
+ * @author Jude Naramor
+ *
+ * @version May 2023
+ *
+ */
 
 public class TOMLToPathParser {
     Vector<TomlTable> tomlSequences = new Vector();
@@ -35,34 +50,42 @@ public class TOMLToPathParser {
         tomlSequences.add(Toml.parse(file.getPath()).getTable("sequence"));
     }
 
-    public TrajectorySequence Parse(String filename)
+    public TrajectorySequenceBuilder Parse(String filename)
     {
         File file = new File(filename);
 
         tomlSequences.add(Toml.parse(file.getPath()).getTable("sequence"));
         tomlSequences.add(Toml.parse(file.getPath()).getTable("initialPosition"));
-        ArrayList<SequenceSegment> segments = new ArrayList<SequenceSegment>();
         double lastHeading = (double) ((tomlSequences.get(1).getArray("initialPosition")).toList()).get(2);
         double lastX = (double) ((tomlSequences.get(1).getArray("initialPosition")).toList()).get(0);
         double lastY = (double) ((tomlSequences.get(1).getArray("initialPosition")).toList()).get(1);
 
+        Pose2d startPose = new Pose2d(lastX, lastY, Math.toRadians(lastHeading));
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        TrajectorySequenceBuilder trajSeq = drive.trajectorySequenceBuilder(startPose);
         for (int i = 0; i < tomlSequences.get(0).getArray("sequence").toList().size() - 1; i++)
         {
             List list = (tomlSequences.get(0)).getArray("sequence.traj" + (i+1) + ".args").toList();
             double[] array = (double[]) list.get(0); // x, y
 
-            Pose2d start = new Pose2d(lastX, lastY, lastHeading);
-            switch  () {
+            //handle types of paths (i.e. constant, linear, spline, etc.
+            switch  ((String)(tomlSequences.get(0)).getArray("sequence.traj" + (i+1) + ".args").toList().get(0)) {
+                case "lineToLinearHeading":
+                    trajSeq.lineToLinearHeading(new Pose2d(array[0], array[1], Math.toRadians((int)list.get(1))));
+                    break;
+                case "lineToConstantHeading":
+                    trajSeq.lineToConstantHeading(new Vector2d(array[0], array[1]));
+                    break;
+                case "lineToSplineHeading":
+                    trajSeq.lineToSplineHeading(new Pose2d(array[0], array[1], Math.toRadians((int)list.get(1))));
+                    break;
+                default:
+                    break;
 
             }
-            Pose2d end = new Pose2d((array[0], array[1], 0);
-            SequenceSegment seg = new SequenceSegment(1, start, end, null); //fix later
-            segments.add(seg);
-            lastX = end.getX();
-            lastY = end.getY();
-            lastHeading = end.getHeading();
         }
-        TrajectorySequence trajSeq = new TrajectorySequence(segments);
+
         return trajSeq;
     }
 }
