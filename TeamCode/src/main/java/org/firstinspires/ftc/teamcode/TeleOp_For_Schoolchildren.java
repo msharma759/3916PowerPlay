@@ -69,7 +69,8 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
         double prevSlidePos;
         boolean slideLimit;
 
-        bot.slideMotor.setRunMode(Motor.RunMode.RawPower);
+        bot.leftSlideMotor.setRunMode(Motor.RunMode.RawPower);
+        bot.rightSlideMotor.setRunMode(Motor.RunMode.RawPower);
 
         //Wait for the driver to hit Start
         waitForStart();
@@ -145,9 +146,11 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             //Button inputs
             //I mean you could break the robot, but you probably shouldnt be able to
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.slideMotor.set(-1);
+                bot.leftSlideMotor.set(-1);
+                bot.rightSlideMotor.set(1);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
-                bot.slideMotor.set(1);
+                bot.leftSlideMotor.set(-1);
+                bot.rightSlideMotor.set(1);
             } else {
                 bot.motorUpdate();
             }
@@ -168,7 +171,8 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
-            telemetry.addData("Slide Motor Encoder", "pos: "+bot.slideMotor.encoder.getPosition());
+            telemetry.addData("Slide Motor Encoder", "pos: "+bot.leftSlideMotor.encoder.getPosition());
+            telemetry.addData("Slide Motor Encoder", "pos: "+bot.rightSlideMotor.encoder.getPosition());
             telemetry.addData("Precision Mode", precisionMode);
             telemetry.update();
         }
