@@ -28,6 +28,7 @@ import org.checkerframework.checker.units.qual.C;
  * @author Jason Armbruster
  * @author Vikram Krishnakumar
  * @author Maulik Verma
+ * @author Jude Naramor
  *
  * @since November 2020
  * @version October 2021
