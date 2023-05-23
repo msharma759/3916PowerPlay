@@ -45,7 +45,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
     //Example:
     //public MotorEx flywheelMotor;
-    public MotorEx slideMotor;
+    public MotorEx leftSlideMotor;
+    public MotorEx rightSlideMotor;
     public ServoEx clawServo;
     public double slideMotorTargetVelocity = 0;
     private double slideMotorCurrentTarget = 0;
@@ -67,13 +68,18 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         pidSlideMotor.setTolerance(TeleOpConfig.SLIDE_MOTOR_TOLERANCE);
         clawServo = new SimpleServo(hw, "claw servo", 0, 300);
 
-        slideMotor = new MotorEx(hw, "slide motor");
-        slideMotor.setRunMode(Motor.RunMode.RawPower);
-        slideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        slideMotor.encoder.reset();
+        rightSlideMotor = new MotorEx(hw, "right slide motor");
+        rightSlideMotor.setRunMode(Motor.RunMode.RawPower);
+        rightSlideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        rightSlideMotor.encoder.reset();
 
-        slideMotor.setPositionCoefficient(TeleOpConfig.SLIDE_MOTOR_COEFFICIENT);
-        slideMotor.setPositionTolerance(TeleOpConfig.SLIDE_MOTOR_TOLERANCE);
+        leftSlideMotor = new MotorEx(hw, "left slide motor");
+        leftSlideMotor.setRunMode(Motor.RunMode.RawPower);
+        leftSlideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        leftSlideMotor.encoder.reset();
+
+        leftSlideMotor.setPositionCoefficient(TeleOpConfig.SLIDE_MOTOR_COEFFICIENT);
+        leftSlideMotor.setPositionTolerance(TeleOpConfig.SLIDE_MOTOR_TOLERANCE);
 
     }
 
@@ -100,17 +106,20 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 
 
     public void motorUpdate() {
-        int curPos = slideMotor.getCurrentPosition();
-        if (!motorAtPos(slideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE) && slideBusy) {
+        int curPos = leftSlideMotor.getCurrentPosition();
+        if (!motorAtPos(leftSlideMotor, slideMotorCurrentTarget, TeleOpConfig.SLIDE_MOTOR_TOLERANCE) && slideBusy) {
             slideBusy = true;
             if (curPos < slideMotorCurrentTarget) {
-                slideMotor.set(1);
+                leftSlideMotor.set(1);
+                rightSlideMotor.set(1);
             } else {
-                slideMotor.set(-1);
+                leftSlideMotor.set(-1);
+                rightSlideMotor.set(-1);
             }
         } else {
             slideBusy = false;
-            slideMotor.set(0);
+            leftSlideMotor.set(0);
+            rightSlideMotor.set(0);
         }
     }
 
@@ -119,10 +128,11 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         double output = 0;
         if(!pidSlideMotor.atSetPoint()){
              output = pidSlideMotor.calculate(
-                    slideMotor.getCurrentPosition()  // the measured value
+                    leftSlideMotor.getCurrentPosition()  // the measured value
             );
         }
-        slideMotor.setVelocity(output);
+        leftSlideMotor.setVelocity(output);
+        rightSlideMotor.setVelocity(output);
         slideMotorTargetVelocity = output;
     }
 
