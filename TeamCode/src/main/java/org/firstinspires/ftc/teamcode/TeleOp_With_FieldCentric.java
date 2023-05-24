@@ -163,8 +163,10 @@ public class TeleOp_With_FieldCentric extends LinearOpMode {
             telemetry.addData("Front Right Motor", "pos: "+bot.motor_frontRight.encoder.getPosition());
             telemetry.addData("Back Left Motor", "pos: "+bot.motor_backLeft.encoder.getPosition());
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
-            telemetry.addData("Slide Motor Encoder", "pos: "+bot.slideMotor.encoder.getPosition());
-            telemetry.addData("Slide Motor Position", "pos: "+bot.slideMotor.getCurrentPosition());
+            telemetry.addData("Left Slide Motor Encoder", "pos: "+bot.leftSlideMotor.encoder.getPosition());
+            telemetry.addData("Left Slide Motor Position", "pos: "+bot.leftSlideMotor.getCurrentPosition());
+            telemetry.addData("Right Slide Motor Encoder", "pos: "+bot.rightSlideMotor.encoder.getPosition());
+            telemetry.addData("Right Slide Motor Position", "pos: "+bot.rightSlideMotor.getCurrentPosition());
             telemetry.update();
         }
     }

@@ -32,8 +32,10 @@ public class SlideTuner extends LinearOpMode  {
                     targetpos = 2000;
                 }
             }
-            telemetry.addData("TargetVelocity", bot.slideMotorTargetVelocity);
-            telemetry.addData("ActualVelocity", bot.slideMotor.getVelocity());
+            telemetry.addData("TargetLeftVelocity", bot.leftSlideMotorTargetVelocity);
+            telemetry.addData("TargetRightVelocity", bot.rightSlideMotorTargetVelocity);
+            telemetry.addData("ActualLeftVelocity", bot.leftSlideMotor.getVelocity());
+            telemetry.addData("ActualRightVelocity", bot.rightSlideMotor.getVelocity());
         }
     }
 }
