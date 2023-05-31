@@ -78,14 +78,14 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         clawServo = new SimpleServo(hw, "claw servo", 0, 300);
 
         rightSlideMotor = new MotorEx(hw, "right slide motor");
-        rightSlideMotor.setRunMode(Motor.RunMode.RawPower);
+        rightSlideMotor.setRunMode(Motor.RunMode.VelocityControl);
         rightSlideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         rightSlideMotor.encoder.reset();
 
         rightSlideMotor.setInverted(true);
 
         leftSlideMotor = new MotorEx(hw, "left slide motor");
-        leftSlideMotor.setRunMode(Motor.RunMode.RawPower);
+        leftSlideMotor.setRunMode(Motor.RunMode.VelocityControl);
         leftSlideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         leftSlideMotor.encoder.reset();
 
@@ -189,40 +189,11 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 //        return
 //    }
 //
-//    public void moveSlide(double speed) {
-//
-//        switch (currentSlidePosition) {
-//            case BOTTOM:
-//                if(slideMotor.encoder.getPosition() != 0) {
-//
-//                }
-//                else {
-//                    slideMotor.set(0);
-//                }
-//                break;
-//            case LOW:
-//
-//                break;
-//            case MIDDLE:
-//
-//                break;
-//            case TOP:
-//
-//                break;
-//        }
-//    }
-
-    /* Example:
-
-    //Flywheel
-    public void setFlywheelMotor(double speed) {
-       //Set PID Coefficients
-       flywheelMotor.setVeloCoefficients(TeleOpConfig.FLYWHEEL_KP, TeleOpConfig.FLYWHEEL_KI, TeleOpConfig.FLYWHEEL_KD);
-       //Set Velocity
-       flywheelMotor.setVelocity(speed * MAX_TICKS_PER_SECOND);
+    public void moveSlide(double speed) {
+        leftSlideMotor.setVelocity(speed);
+        rightSlideMotor.setVelocity(speed);
     }
 
-    Refer to FTCLib docs here: https://docs.ftclib.org/ftclib/features/hardware
-    */
+//    Refer to FTCLib docs here: https://docs.ftclib.org/ftclib/features/hardware
 
 }
