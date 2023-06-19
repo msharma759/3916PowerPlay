@@ -78,14 +78,14 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
         clawServo = new SimpleServo(hw, "claw servo", 0, 300);
 
         rightSlideMotor = new MotorEx(hw, "right slide motor");
-        rightSlideMotor.setRunMode(Motor.RunMode.VelocityControl);
+        rightSlideMotor.setRunMode(Motor.RunMode.RawPower);
         rightSlideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         rightSlideMotor.encoder.reset();
 
         rightSlideMotor.setInverted(true);
 
         leftSlideMotor = new MotorEx(hw, "left slide motor");
-        leftSlideMotor.setRunMode(Motor.RunMode.VelocityControl);
+        leftSlideMotor.setRunMode(Motor.RunMode.RawPower);
         leftSlideMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         leftSlideMotor.encoder.reset();
 
@@ -190,8 +190,8 @@ public class FTCLibRobotFunctions extends FTCLibMecanumBot {
 //    }
 //
     public void moveSlide(double speed) {
-        leftSlideMotor.setVelocity(speed);
-        rightSlideMotor.setVelocity(speed);
+        leftSlideMotor.set(speed);
+        rightSlideMotor.set(speed);
     }
 
 //    Refer to FTCLib docs here: https://docs.ftclib.org/ftclib/features/hardware

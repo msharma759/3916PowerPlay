@@ -141,20 +141,21 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             */
 
             //Get stick inputs
-
+            double leftY2 = Gamepad2.getLeftY();
 
             //Button inputs
 
             //I mean you could break the robot, but you probably shouldnt be able to
             if (Gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
-                bot.moveSlide(TeleOpConfig.SLIDE_POWER);
-                bot.moveSlide(TeleOpConfig.SLIDE_POWER);
+                bot.moveSlide(TeleOpConfig.SLIDE_POWER_DOWN);
+                bot.moveSlide(TeleOpConfig.SLIDE_POWER_DOWN);
             } else if (Gamepad2.getButton(GamepadKeys.Button.DPAD_UP)) {
-                bot.moveSlide(-1 * TeleOpConfig.SLIDE_POWER);
-                bot.moveSlide(-1 * TeleOpConfig.SLIDE_POWER);
+                bot.moveSlide(-TeleOpConfig.SLIDE_POWER);
+                bot.moveSlide(-TeleOpConfig.SLIDE_POWER);
             } else {
-                bot.moveSlide(0);
+                bot.moveSlide(TeleOpConfig.BRAKE_POWER);
             }
+
 
             if (Gamepad2.getButton(GamepadKeys.Button.A)) {
                 bot.openClaw();
@@ -171,6 +172,7 @@ public class TeleOp_For_Schoolchildren extends LinearOpMode {
             telemetry.addData("Back Right Motor", "pos: "+bot.motor_backRight.encoder.getPosition());
             telemetry.addData("Slide Motor Encoder", "pos: "+bot.leftSlideMotor.encoder.getPosition());
             telemetry.addData("Slide Motor Encoder", "pos: "+bot.rightSlideMotor.encoder.getPosition());
+            telemetry.addData("Left Stick Controller 2", "pos: "+leftY2 );
             telemetry.addData("Precision Mode", precisionMode);
             telemetry.update();
         }

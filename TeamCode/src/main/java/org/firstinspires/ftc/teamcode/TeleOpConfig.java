@@ -13,10 +13,13 @@ public class TeleOpConfig {
     public static double LEFT_SLIDE_MOTOR_COEFFICIENT = 0.05;
     public static double LEFT_SLIDE_MOTOR_TOLERANCE = 10;
 
+    public static double BRAKE_POWER = 0;
+
     public static double RIGHT_SLIDE_MOTOR_COEFFICIENT = 0.05;
     public static double RIGHT_SLIDE_MOTOR_TOLERANCE = 10;
 
-    public static double SLIDE_POWER = .5;
+    public static double SLIDE_POWER = .4;
+    public static double SLIDE_POWER_DOWN = .2;
 
     public static int SLIDE_MOTOR_TEST_POS = 5000;
     public static int SLIDE_MOTOR_TOP_POS = 5000;
