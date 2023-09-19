@@ -25,13 +25,13 @@ import java.util.Vector;
  * TOML Parser method to use to avoid compiling every time a path is changed.
  *
  * @author Jude Naramor
- *
+ * @author Maulik Verma
  * @version May 2023
  *
  */
 
 public class TOMLToPathParser {
-    Vector<TomlTable> tomlSequences = new Vector();
+    ArrayList<TomlTable> tomlSequences = new ArrayList<>();
 
     @SuppressLint("NewApi")
 //    public TOMLToPathParser() {
@@ -82,6 +82,38 @@ public class TOMLToPathParser {
                     break;
                 default:
                     break;
+                case "splineToConstantHeading":
+                    trajSeq.splineToConstantHeading(new Vector2d(array[0], array[1]), Math.toRadians((int)list.get(1)));
+                    break;
+                case "splineToLinearHeading":
+                    trajSeq.splineToLinearHeading(new Pose2d(array[0], array[1]), Math.toRadians((int)list.get(1)));
+                    break;
+                case "splineToSplineHeading":
+                    trajSeq.splineToSplineHeading(new Pose2d(array[0], array[1]), Math.toRadians((int)list.get(1)));
+                    break;
+                case "splineTo":
+                    trajSeq.splineTo(new Vector2d(array[0], array[1]), Math.toRadians((int)list.get(1)));
+                    break;
+                case "lineTo":
+                    trajSeq.lineTo(new Vector2d(array[0], array[1]));
+                    break;
+                case "strafeTo":
+                    trajSeq.strafeTo(new Vector2d(array[0], array[1]));
+                    break;
+                case "strafeRight":
+                    trajSeq.strafeRight(array[0]);
+                    break;
+                case "strafeLeft":
+                    trajSeq.strafeLeft(array[0]);
+                    break;
+                case "back":
+                    trajSeq.back(array[0]);
+                    break;
+                case "forward":
+                    trajSeq.forward(array[0]);
+                    break;
+
+
 
             }
         }
